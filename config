@@ -1,403 +1,238 @@
-;:set syn=dosini
-
-[global/wm]
-margin-top = 100
-margin-bottom = 100
-
-
-[colors]
-
-fg = ${xrdb:color7}
-modfg = ${xrdb:color3}
-alt = ${xrdb:color2}
-alt2 = ${xrdb:color1}
-bg = ${xrdb:color0}
-
-
-white = #d1d1d1
-gray = #585858
-black = #ff121212
-red = #c795ae
-blue = #95aec7
-yellow = #c7ae95
-green = #aec795
-
-
-[bar/Bar]
-bottom = false
-dock = false
-wm-restack = i3
-
-;monitor = HDMI-0
-
-fixed-center = true
-
-border-size = 10
-border-color = #00aaaaaa
-
-width = 100%
-height = 30
-
-override-redirect = true
-;offset-x = 5%
-;offset-y = 1%
-radius = 5
-
-enable-ipc = false
-
-padding-left = 2
-padding-right = 2
-
-module-margin-right = 0
-module-margin-left = 0
-
-;amodules-right = updates date menu0
-;modules-center = mpd
-;modules-left = cpu memory filesystem
-
-modules-right = i3 menu0 
-modules-center = date 
-modules-left = cpu memory battery wlan temperature crypto volume
-
-separator = "      "
-
-background = ${colors.bg}
-foreground = ${colors.modfg}
-
-;overline-size = 2
-;overline-color = ${colors.white}
-;underline-size = 4
-;underline-color = ${colors.modfg}
-
-font-0 = micro:weight=regular:size=9;3
-font-1 = FontAwesome:size=10;3
-font-2 = IPAPgothic:weight=regular:size=10;3
-font-3 = FontAwesome 5 Free:size=10:style=Solid;3
-font-4 = unifont:size=10;3
-font-5 = "Font Awesome 5 Brands:pixelsize12;3"
-font-6 = cryptocoins:style=size=10;3
-
-[module/xwindow]
-type = internal/xwindow
-label = %title%
-label-maxlen = 30
-
-
-[module/crypto]
-type = custom/script
-interval = 25
-exec = /home/bryce/.config/polybar/crypto.sh
-
-
-[module/filesystem]
-type = internal/fs
-interval = 25
-
-
-;mount-0 = /
-mount-0 = /home
-mount-1 = /home/gui/HDD
-
-label-mounted =  %free%
-;label-mounted-underline = ${colors.modfg}
-label-mounted-padding = 1
-;label-mounted-background = ${colors.bg}
-
-label-unmounted =
-;label-unmounted-foreground = ${colors.bg}
-
-
-[module/i3]
-type = internal/i3
-format = <label-mode> <label-state>
-index-sort = true
-strip-wsnumbers = true
-
-label-focused = %name%
-label-focused-padding = 1
-label-focused-foreground = ${colors.bg}
-label-focused-background = ${colors.modfg}
-
-label-unfocused = %name%
-label-unfocused-padding = 1
-;label-unfocused-background = ${colors.black}
-
-label-urgent = %name%
-label-urgent-background = ${colors.alt}
-label-urgent-padding = 1
-
-label-visible = %name%
-label-visible-padding = 1
-
-
-
-[module/mpd]
-type = internal/mpd
-
-host = gui
-port = 4200
-
-;format-online = <label-song> <icon-prev> <icon-play> <icon-pause> <icon-next> 
-format-online = <label-song>
-format-offline = <label-offline>
-
-label-offline = mpd is offline
-;label-offline-foreground = ${colors.bg}
-
-label-song = "%artist% - %title%"
-label-song-maxlen = 120
-label-song-ellipsis = false
-;label-song-background = ${colors.black}
-;label-song-padding = 1
-
-
-;icon-prev = 
-;icon-seekb = <<
-;icon-stop = o
-;icon-pause = %{T4}
-;icon-play = %{T4}
-;icon-next = %{T4}
-;icon-seekf = >>
-
-icon-random = S
-icon-repeat = R
-
-toggle-on-foreground = #e60053
-toggle-off-foreground = #66
-
-
-[module/backlight]
-type = internal/xbacklight
-
-format = <label> <bar>
-label = BL
-
-bar-width = 10
-bar-indicator = │
-bar-indicator-foreground = #ff
-bar-indicator-font = 2
-bar-fill = ─
-bar-fill-font = 2
-bar-fill-foreground = #9f78e1
-bar-empty = ─
-bar-empty-font = 2
-bar-empty-foreground = #55
-
-
-[module/cpu]
-format-label = internal/cpu
-
-format = <label>
-
-ramp-coreload-0 = ▁
-ramp-coreload-1 = ▂
-ramp-coreload-2 = ▃
-ramp-coreload-3 = ▄
-ramp-coreload-4 = ▅
-ramp-coreload-5 = ▆
-ramp-coreload-6 = ▇
-ramp-coreload-7 = █
-ramp-coreload-underline = ${colors.fg}
-
-type = internal/cpu
-interval = 2
-label = " %percentage%%"
-
-;label-underline = ${colors.modfg}
-;label-background = ${colors.bg}
-;label-overline = ${colors.white}
-
-
-[module/memory]
-type = internal/memory
-interval = 2
-
-label = " %percentage_used%%"
-;label = RAM %percentage_used%%
-;label-underline = ${colors.modfg}
-;label-foreground = ${colors.modfg}
-;label-background = ${colors.bg}
-
-
-[module/wlan]
-type = internal/network
-interface = wlp4s0
-interval = 3.0
-
-format-connected-padding = 1
-format-disconnected-padding = 1
-
-format-connected = <label-connected>
-format-connected-underline = ${colors.white}
-format-disconnected-underline = ${colors.gray}
-
-label-connected = %essid%
-label-disconnected = 
-label-disconnected-foreground = ${colors.gray}
-
-
-[module/eth]
-type = internal/network
-interface = enp2s0
-interval = 3.0
-
-format-connected-padding = 1
-format-disconnected-padding = 1
-
-format-connected-underline = ${colors.white}
-format-disconnected-underline = ${colors.gray}
-
-label-connected =  
-label-disconnected = 
-label-disconnected-foreground = ${colors.gray}
-
-
-[module/date]
-type = internal/date
-date-alt = %A   %H:%M 
-date = %b/%d/%y   %H:%M
-interval = 5
-
-;format-underline = ${colors.modfg}
-;format-background = ${colors.bg}
-;format-foreground = ${colors.fg}
-;format-padding = 2
-
-
-[module/volume]
-type = internal/volume
-
-format-volume = <bar-volume>
-
-label-volume = VOL
-label-volume-foreground = ${root.foreground}
-
-label-muted =  sound muted
-label-muted-foreground = ${colors.gray}
-
-bar-volume-width = 10
-bar-volume-foreground-0 = ${colors.yellow}
-bar-volume-foreground-1 = ${colors.yellow}
-bar-volume-foreground-2 = ${colors.yellow}
-bar-volume-foreground-3 = ${colors.yellow}
-bar-volume-foreground-4 = ${colors.yellow}
-bar-volume-foreground-5 = ${colors.yellow}
-bar-volume-gradient = false
-bar-volume-indicator = 
-bar-volume-indicator-font = 4
-bar-volume-indicator-foreground = ${colors.white}
-bar-volume-fill = 
-bar-volume-fill-font = 4
-bar-volume-empty = 
-bar-volume-empty-font = 4
-bar-volume-empty-foreground = ${colors.gray}
-
-
-[module/battery]
-type = internal/battery
-battery = BAT0
-adapter = AC
-full-at = 98
-
-format-charging = <animation-charging> <label-charging>
-format-charging-underline = ${colors.green}
-format-charging-padding = 1
-
-format-discharging = <ramp-capacity> <label-discharging>
-format-discharging-underline = ${colors.yellow}
-format-discharging-padding = 1
-
-format-full =   <label-full>
-format-full-underline = ${self.format-charging-underline}
-format-full-overline = ${self.format-charging-underline}
-format-full-padding = 1
-
-ramp-capacity-0 = 
-ramp-capacity-1 = 
-ramp-capacity-2 = 
-ramp-capacity-foreground = ${colors.yellow}
-
-animation-charging-0 = 
-animation-charging-1 = 
-animation-charging-2 = 
-animation-charging-3 = 
-animation-charging-4 = 
-animation-charging-foreground = ${colors.yellow}
-animation-charging-framerate = 500
-
-
-[module/temperature]
-type = internal/temperature
-; thermal-zone = 0
-warn-temperature = 65
-
-format = <label> 
-format-warn = <label-warn>
-
-label = %temperature%
-label-warn = %temperature%!!!
-
-
-[module/menu0]
-type = custom/menu
-
-format = <label-toggle> <menu>
-;format-underline = ${colors.white}
-format-padding = 1
-;format-margin = 1
-
-;format-background = ${colors.black}
-
-menu-0-0 = " shutdown "
-menu-0-0-exec = shutdown now
-menu-0-1 = " restart "
-menu-0-1-exec = shutdown -r now
-menu-0-2 =   cancel
-
-
-label-open = 
-label-close =
-
-[module/updates]
-type = custom/script
-
-;label-background = ${colors.bg}
-;label-padding = 0
-;label-underline = ${colors.modfg}
-
-exec = checkupdates | wc -l
-;tail = true
-interval = 60
-
-label  = " %output%"
-
-
-[module/cputemp]
-type = custom/script
-
-;label-background = ${colors.bg}
-;label-padding = 0
-;label-underline = ${colors.modfg}
-
-exec = sensors | grep --max-count=1 "CPU Temperature:" | awk '{print substr($0,22,2)}'
-;tail = true
-interval = 10
-
-label = " %output%°C"
-
-
-[module/gputemp]
-type = custom/script
-
-;label-background = ${colors.bg}
-;label-padding = 0
-;label-underline = ${colors.modfg}
-
-exec = nvidia-smi --query-gpu=temperature.gpu --format=csv,noheader,nounits
-;tail = true
-interval = 10
-
-label = "GPU %output%°C"
-
-
-; vim:ft=dosini
+# This file has been auto-generated by i3-config-wizard(1).
+# It will not be overwritten, so edit it as you like.
+#
+# Should you change your keyboard layout some time, delete
+# this file and re-run i3-config-wizard(1).
+#
+
+# i3 config file (v4)
+#
+# Please see https://i3wm.org/docs/userguide.html for a complete reference!
+
+# colors
+set_from_resource $border       color0 #bf616aFF
+set_from_resource $background   color0 #2b303bCC
+set_from_resource $text         color8 #c0c5ceFF
+set_from_resource $active       color4 #bf616aFF
+set_from_resource $inactive     color7 #c0c5ceFF
+
+set $bar-height  40
+set $border-width 0
+
+set $mod Mod1
+
+# Font for window titles. Will also be used by the bar unless a different font
+# is used in the bar {} block below.
+font pango:monospace 8
+
+# This font is widely installed, provides lots of unicode glyphs, right-to-left
+# text rendering and scalability on retina/hidpi displays (thanks to pango).
+#font pango:DejaVu Sans Mono 8
+
+# Before i3 v4.8, we used to recommend this one as the default:
+# font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
+# The font above is very space-efficient, that is, it looks good, sharp and
+# clear in small sizes. However, its unicode glyph coverage is limited, the old
+# X core fonts rendering does not support right-to-left and this being a bitmap
+# font, it doesn’t scale on retina/hidpi displays.
+
+# Use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier $mod
+
+# start a terminal
+bindsym $mod+Return exec urxvt
+
+# kill focused window
+bindsym $mod+Shift+q kill
+
+# start dmenu (a program launcher)
+bindsym $mod+d exec rofi -show run - lines 3 -eh 2 -width 100 -padding 800
+# There also is the (new) i3-dmenu-desktop which only displays applications
+# shipping a .desktop file. It is a wrapper around dmenu, so you need that
+# installed.
+# bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
+
+# change focus
+bindsym $mod+j focus left
+bindsym $mod+k focus down
+bindsym $mod+l focus up
+bindsym $mod+semicolon focus right
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# move focused window
+bindsym $mod+Shift+j move left
+bindsym $mod+Shift+k move down
+bindsym $mod+Shift+l move up
+bindsym $mod+Shift+semicolon move right
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+# bryces custom stuff
+new_window pixel $border-width
+gaps inner 15
+gaps outer 15
+
+# split in horizontal orientation
+bindsym $mod+h split h
+
+# split in vertical orientation
+bindsym $mod+v split v
+
+# enter fullscreen mode for the focused container
+bindsym $mod+f fullscreen toggle
+
+# change container layout (stacked, tabbed, toggle split)
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+# toggle tiling / floating
+bindsym $mod+Shift+space floating toggle
+
+# change focus between tiling / floating windows
+bindsym $mod+space focus mode_toggle
+
+# focus the parent container
+bindsym $mod+a focus parent
+
+# focus the child container
+#bindsym $mod+d focus child
+
+# Define names for default workspaces for which we configure key bindings later on.
+# We use variables to avoid repeating the names in multiple places.
+set $ws1 "1:"
+set $ws2 "2:"
+set $ws3 "3:"
+set $ws4 "4:"
+set $ws5 "5:"
+set $ws6 "6:"
+set $ws7 "7:"
+set $ws8 "8:8"
+set $ws9 "9:9"
+set $ws10 "10:10"
+
+# switch to workspace
+bindsym $mod+1 workspace $ws1
+bindsym $mod+2 workspace $ws2
+bindsym $mod+3 workspace $ws3
+bindsym $mod+4 workspace $ws4
+bindsym $mod+5 workspace $ws5
+bindsym $mod+6 workspace $ws6
+bindsym $mod+7 workspace $ws7
+bindsym $mod+8 workspace $ws8
+bindsym $mod+9 workspace $ws9
+bindsym $mod+0 workspace $ws10
+
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace $ws1
+bindsym $mod+Shift+2 move container to workspace $ws2
+bindsym $mod+Shift+3 move container to workspace $ws3
+bindsym $mod+Shift+4 move container to workspace $ws4
+bindsym $mod+Shift+5 move container to workspace $ws5
+bindsym $mod+Shift+6 move container to workspace $ws6
+bindsym $mod+Shift+7 move container to workspace $ws7
+bindsym $mod+Shift+8 move container to workspace $ws8
+bindsym $mod+Shift+9 move container to workspace $ws9
+bindsym $mod+Shift+0 move container to workspace $ws10
+
+# reload the configuration file
+bindsym $mod+Shift+c reload
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $mod+Shift+r restart
+# exit i3 (logs you out of your X session)
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+
+# resize window (you can also use the mouse for that)
+mode "resize" {
+        # These bindings trigger as soon as you enter the resize mode
+
+        # Pressing left will shrink the window’s width.
+        # Pressing right will grow the window’s width.
+        # Pressing up will shrink the window’s height.
+        # Pressing down will grow the window’s height.
+        bindsym j resize shrink width 10 px or 10 ppt
+        bindsym k resize grow height 10 px or 10 ppt
+        bindsym l resize shrink height 10 px or 10 ppt
+        bindsym semicolon resize grow width 10 px or 10 ppt
+
+        # same bindings, but for the arrow keys
+        bindsym Left resize shrink width 10 px or 10 ppt
+        bindsym Down resize grow height 10 px or 10 ppt
+        bindsym Up resize shrink height 10 px or 10 ppt
+        bindsym Right resize grow width 10 px or 10 ppt
+
+        # back to normal: Enter or Escape or $mod+r
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+        bindsym $mod+r mode "default"
+}
+
+bindsym $mod+r mode "resize"
+
+# Start i3bar to display a workspace bar (plus the system information i3status
+# finds out, if available
+
+bar {
+  i3bar_command i3bar
+  mode invisible
+  position bottom
+  height $bar-height
+  tray_padding 8
+  tray_output none
+  font pango:Monaco 12
+  strip_workspace_numbers yes
+  status_command conky -c $HOME/.config/i3/conky/conkyrc
+
+  colors {
+    background $background
+    statusline $text
+    separator $background
+    #class             border   bg            text
+    focused_workspace  $active  $active       $background
+    active_workspace   $border  $background   $active
+    inactive_workspace $border  $background   $inactive
+    urgent_workspace   $border  $background   $inactive
+  }
+}
+
+
+#wallpaper
+exec_always feh --bg-scale ~/Pictures/wallpaper.jpg
+#polybar
+exec polybar Bar
+exec_always compton -b
+exec_always xinput disable 9
+
+bindsym XF86MonBrightnessDown exec xbacklight -5
+bindsym XF86MonBrightnessUp exec xbacklight +5
+bindsym XF86AudioPlay exec playerctl play
+bindsym XF86AudioPause exec playerctl pause
+bindsym XF86AudioNext exec playerctl next
+bindsym XF86AudioPrev exec playerctl previous
+# Pulse Audio controls
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5% #increase sound volume
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5% #decrease sound volume
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle # mute sound
+
+bindsym $mod+shift+h exec wine ~/.wine/drive_c/"Program Files (x86)"/Battle.net/"Battle.net Launcher.exe"
+bindsym $mod+t exec firefox
+bindsym $mod+n exec /opt/Tusk/tusk-app
+assign [class="Firefox"] $ws2
+assign [class="Tusk"] $ws4
+assign [class="Signal"] $ws7
+for_window [class="Spotify"] move to workspace $ws3
+
+exec spotify
+exec firefox
+exec urxvt
+exec xrdb ~/.Xresources
+exec xset b off
