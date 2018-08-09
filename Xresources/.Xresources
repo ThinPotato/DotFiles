@@ -1,0 +1,58 @@
+! General settings
+URxvt.scrollBar: false
+URxvt.internalBorder: 30
+URxvt.tintColor: white
+URxvt.inheritPixmap: false
+
+!Transparency - real
+URxvt*depth: 32
+urxvt*background: [90]#4f4e4d
+
+!Transparency - fake
+!URxvt.transparent: true
+!URxvt.shading: 32
+
+! Set urxvt as login shell
+URxvt*loginShell: true
+
+! Font settings
+URxvt.font: xft:iosevka:size=12
+
+! special
+*.foreground:   #BCABA1
+*.background:   #4F4E4D
+*.cursorColor:  #cfcfc2
+
+! black
+*.color0:       #4F4E4D
+*.color8:       #4F4E4D
+
+! red
+*.color1:       #90847C
+*.color9:       #90847C
+
+! green
+*.color2:       #A4948C
+*.color10:      #A4948C
+
+! yellow
+*.color3:       #BCABA1
+*.color11:      #BCABA1
+
+! blue
+*.color4:       #9C8D8A
+*.color12:      #9C8D8A
+
+! magenta
+*.color5:       #91837C
+*.color13:      #91837C
+
+! cyan
+*.color6:       #A09289
+*.color14:      #A09289
+
+! white
+*.color7:       #BAA99F
+*.color15:      #BAA99F
+
+URxvt.perl-ext-common: fullscreen
