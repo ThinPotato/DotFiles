@@ -10,11 +10,11 @@
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!
 
 # colors
-set_from_resource $border       color0 #bf616aFF
-set_from_resource $background   color0 #2b303bCC
-set_from_resource $text         color8 #c0c5ceFF
-set_from_resource $active       color4 #bf616aFF
-set_from_resource $inactive     color7 #c0c5ceFF
+set_from_resource $border       color0 #7b787c
+set_from_resource $background   color0 #3f494f
+set_from_resource $text         color8 #dad1ce
+set_from_resource $active       color4 #5885bc
+set_from_resource $inactive     color7 #7b787c
 
 set $bar-height  40
 set $border-width 0
@@ -207,6 +207,7 @@ bar {
 
 #wallpaper
 exec_always feh --bg-scale ~/Pictures/wallpaper.jpg
+exec wal -R
 #polybar
 exec polybar Bar
 exec_always compton -b
@@ -225,14 +226,22 @@ bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle # mute s
 
 bindsym $mod+shift+h exec wine ~/.wine/drive_c/"Program Files (x86)"/Battle.net/"Battle.net Launcher.exe"
 bindsym $mod+t exec firefox
+bindsym Super_L exec slimlock
 bindsym $mod+n exec /opt/Tusk/tusk-app
 assign [class="Firefox"] $ws2
 assign [class="Tusk"] $ws4
 assign [class="Signal"] $ws7
+assign [class="discord"] $ws7
+for_window [class="VSCodium"] move to workspace $ws5
 for_window [class="Spotify"] move to workspace $ws3
+for_window [class="Discord"] floating enable
+for_window [class="discord"] move to workspace $ws7
 
+exec vscodium
+exec discord
 exec spotify
 exec firefox
 exec urxvt
-exec xrdb ~/.Xresources
 exec xset b off
+show_marks yes
+exec twmnd
