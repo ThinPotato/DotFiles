@@ -79,14 +79,21 @@ dock = false
 wm-restack = i3
 
 modules-right = i3 menu0
-modules-center = date
-modules-left = cpu memory battery temp wlan crypto
+modules-center = xwindow
+modules-left = date cpu memory battery wlan crypto spotify volume
 
 [module/xwindow]
 type = internal/xwindow
 label = %title%
-label-maxlen = 30
+label-maxlen = 50
 
+[module/spotify]
+type = custom/script
+interval = 5
+format-prefix = " "
+format = <label>
+exec = python ~/.config/polybar/spotify.py -f '{artist}: {song}'
+format-underline = #1db954
 
 [module/crypto]
 type = custom/script
@@ -257,7 +264,7 @@ label-disconnected-foreground = ${colors.gray}
 
 [module/date]
 type = internal/date
-date-alt = %A   %H:%M 
+date-alt = %H:%M 
 date = %B %d %y   %H:%M
 interval = 5
 
@@ -302,11 +309,11 @@ adapter = AC
 full-at = 98
 
 
-format-charging = <animation-charging><label-charging>
+format-charging = <animation-charging> <label-charging>
 format-charging-underline = ${colors.fg}
 ;format-charging-padding-left = 1
 
-format-discharging = <ramp-capacity><label-discharging>
+format-discharging = <ramp-capacity> <label-discharging>
 format-discharging-underline = ${colors.fg}
 ;format-discharging-padding = 1
 
